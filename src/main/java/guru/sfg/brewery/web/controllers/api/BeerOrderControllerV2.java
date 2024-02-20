@@ -44,7 +44,7 @@ public class BeerOrderControllerV2 {
     }
 
     @BeerOrderReadPermissionV2
-    @GetMapping("orders/{orderId}")
+    @GetMapping("{orderId}")
     public BeerOrderDto getOrder(@PathVariable("orderId") UUID orderId){
 
         return null;
