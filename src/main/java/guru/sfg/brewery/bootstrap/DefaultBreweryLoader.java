@@ -224,11 +224,11 @@ public class DefaultBreweryLoader implements CommandLineRunner {
         //beer order
         Authority createOrder = authorityRepository.save(Authority.builder().permission("order.create").build());
         Authority readOrder = authorityRepository.save(Authority.builder().permission("order.read").build());
-        Authority updateOrder = authorityRepository.save(Authority.builder().permission("order.update").build());
+        Authority updateOrder = authorityRepository.save(Authority.builder().permission("order.pickup").build());
         Authority deleteOrder = authorityRepository.save(Authority.builder().permission("order.delete").build());
         Authority createOrderCustomer = authorityRepository.save(Authority.builder().permission("customer.order.create").build());
         Authority readOrderCustomer = authorityRepository.save(Authority.builder().permission("customer.order.read").build());
-        Authority updateOrderCustomer = authorityRepository.save(Authority.builder().permission("customer.order.update").build());
+        Authority updateOrderCustomer = authorityRepository.save(Authority.builder().permission("customer.order.pickup").build());
         Authority deleteOrderCustomer = authorityRepository.save(Authority.builder().permission("customer.order.delete").build());
 
 

@@ -2,16 +2,14 @@ package guru.sfg.brewery.web.controllers.api;
 
 import guru.sfg.brewery.security.perm.BeerOrderCreatePermission;
 import guru.sfg.brewery.security.perm.BeerOrderReadPermission;
+import guru.sfg.brewery.security.perm.BeerOrderPickupPermission;
 import guru.sfg.brewery.services.BeerOrderService;
 import guru.sfg.brewery.web.model.BeerOrderDto;
 import guru.sfg.brewery.web.model.BeerOrderPagedList;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.UUID;
 
 @RequestMapping("/api/v1/customers/{customerId}/")
@@ -57,6 +55,7 @@ public class BeerOrderController {
         return beerOrderService.getOrderById(customerId, orderId);
     }
 
+    @BeerOrderPickupPermission
     @PutMapping("/orders/{orderId}/pickup")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void pickupOrder(@PathVariable("customerId") UUID customerId, @PathVariable("orderId") UUID orderId){
