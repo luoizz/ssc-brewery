@@ -1,5 +1,6 @@
 package guru.sfg.brewery.web.controllers.api;
 
+import guru.sfg.brewery.security.perm.BeerOrderCreatePermission;
 import guru.sfg.brewery.security.perm.BeerOrderReadPermission;
 import guru.sfg.brewery.services.BeerOrderService;
 import guru.sfg.brewery.web.model.BeerOrderDto;
@@ -43,6 +44,7 @@ public class BeerOrderController {
         return beerOrderService.listOrders(customerId, PageRequest.of(pageNumber, pageSize));
     }
 
+    @BeerOrderCreatePermission
     @PostMapping("orders")
     @ResponseStatus(HttpStatus.CREATED)
     public BeerOrderDto placeOrder(@PathVariable("customerId") UUID customerId, @RequestBody BeerOrderDto beerOrderDto){
