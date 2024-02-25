@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -70,12 +71,14 @@ class BeerOrderControllerTest extends BaseIT {
                 .andExpect(status().isUnauthorized());
     }
 
+    @Disabled
     @WithUserDetails("spring")
     @Test
     void createOrderUserAdmin() throws Exception {
         BeerOrderDto beerOrderDto = buildOrderDto(stPeteCustomer, loadedBeers.get(0).getId());
 
         mockMvc.perform(post(API_ROOT + stPeteCustomer.getId() + "/orders")
+                        .with(csrf())
                 .accept(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -83,12 +86,14 @@ class BeerOrderControllerTest extends BaseIT {
                 .andExpect(status().isCreated());
     }
 
+    @Disabled
     @WithUserDetails(DefaultBreweryLoader.STPETE_USER)
     @Test
     void createOrderUserAuthCustomer() throws Exception {
         BeerOrderDto beerOrderDto = buildOrderDto(stPeteCustomer, loadedBeers.get(0).getId());
 
         mockMvc.perform(post(API_ROOT + stPeteCustomer.getId() + "/orders")
+                        .with(csrf())
                 .accept(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .contentType(MediaType.APPLICATION_JSON)

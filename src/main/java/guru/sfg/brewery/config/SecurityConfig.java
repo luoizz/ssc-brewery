@@ -36,14 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilterBefore(restHeaderAuthFilter(authenticationManager()),
-                UsernamePasswordAuthenticationFilter.class)
-                .csrf().disable();
-
-        http.addFilterBefore(restUrlAuthFilter(authenticationManager()),
-                UsernamePasswordAuthenticationFilter.class)
-                        .csrf().disable();
-
         http
                 .authorizeRequests(authorize -> {
                     authorize.antMatchers("/h2-console/**").permitAll() // do not use in production!!
@@ -53,7 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .csrf().ignoringAntMatchers("/h2-console/**", "/api/**");
 
         // h2 console config
         http.headers().frameOptions().sameOrigin();

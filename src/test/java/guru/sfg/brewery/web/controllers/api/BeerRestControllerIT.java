@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Random;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,14 +38,6 @@ public class BeerRestControllerIT extends BaseIT {
                     .quantityToBrew(200)
                     .upc(String.valueOf(rand.nextInt(99999999)))
                     .build());
-        }
-
-        @Test
-        void deleteBeer() throws Exception {
-            mockMvc.perform(delete("/api/v1/beer/" + beerToDelete().getId())
-                            .header("Api-key", "spring")
-                            .header("Api-secret", "guru"))
-                    .andExpect(status().isOk());
         }
 
         @Test
@@ -80,14 +73,6 @@ public class BeerRestControllerIT extends BaseIT {
                             .header("Api-key", "spring")
                             .header("Api-secret", "bad-pass"))
                     .andExpect(status().isUnauthorized());
-        }
-
-        @Test
-        void deleteBeerUrlAuth() throws Exception {
-            mockMvc.perform(delete("/api/v1/beer/" + beerToDelete().getId())
-                            .param("Api-key", "spring")
-                            .param("Api-secret", "guru"))
-                    .andExpect(status().isOk());
         }
 
         @Test
